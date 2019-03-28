@@ -34,7 +34,7 @@ function unsignedByteToSigned(byte) {
 }
 
 const type1Offset = {
-    x: 12,
+    x: 16,
     y: 36
 }
 

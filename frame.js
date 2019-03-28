@@ -6,7 +6,7 @@ const defaultFrameSize = {
 };
 
 const type1FrameSize = {
-    w: 24,
+    w: 32,
     h: 48
 }
 

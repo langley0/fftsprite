@@ -25,7 +25,7 @@ for(const seq of sequences) {
     for (let i = 0; i < anims.bitmaps.length; ++i) {
         const f = anims.bitmaps[i];
         const png = new PNG({
-            width : 24,
+            width : 32,
             height: 48,
             filterType: -1,
         });
