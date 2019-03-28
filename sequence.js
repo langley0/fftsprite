@@ -14,7 +14,7 @@ function intFromBytes( x ){
 function init () {
     const bytes = fs.readFileSync('TYPE1.SEQ');
     const result= buildAll(bytes, new Array(218), false);
-    console.log(JSON.stringify(result, null, 2));
+    return result;
 }
 
 function buildAll(bytes, names, mon) {
@@ -126,19 +126,17 @@ class Sequence {
         }
     }
 
-    BuildAnimation(sprite) {
+    buildAnimation(sprite) {
         const frameToBitmap = {};
-        for(const frame of uniqueFrames) {
-            frameToBitmap[frame] = sprite.Shape.Frames[frame].GetFrame( sprite );
-        }
+        const frames = sprite.Shape.getFrames(sprite);
 
         const result = [];
         const ourDelays = [];
 
-        for (const frame of frames )
+        for (const frame of this.frames )
         {
-            result.push( frameToBitmap[frame.Index] );
-            ourDelays.push( frame.Delay / 60 );
+            result.push( frames[frame.Index] );
+            ourDelays.push( frame.Delay );
         }
 
         return { 
@@ -148,5 +146,4 @@ class Sequence {
     }
 }
 
-
-init();
+module.exports = init();

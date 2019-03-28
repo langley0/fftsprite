@@ -63,34 +63,49 @@ function Decompress( bytes ) {
 
 function BuildPixels(bytes) {
     let result = []
-    for( const b in bytes.slice( 0, 36864 ))
+    for( const b of bytes.slice( 0, 36864 ))
     {
         result.push( b & 0x0F );
         result.push( (b & 0xF0) / 16 );
     }
-
     result = result.concat( Decompress( bytes.slice( 36864 ) ) );
     while(result.length < 488 * 256) {
         result.push(0);
     }
-
     return result;
 }
+
+const topHeight = 256;
+const portraintHeight = 32;
+const compressedHeight = 200;
+
 
 class AbstractCompressedSprite extends AbstractSprite{
     constructor(bytes) {
         super(bytes);
-
-        this.topHeight = 256;
-        this.portraintHeight = 32;
-        this.compressedHeight = 200;
-
         this.pixels = BuildPixels( bytes.slice( 16 * 32 ) );
     }
 
     getPixel(index) {
-        return this.palettes[0].Colors[this.pixels[index] % 16]
+        const y = Math.floor(index / this.width);
+        const x = index % this.width;
+        if (y < topHeight) {
+            index = y *  this.width + x;
+        } else if (y < topHeight + compressedHeight) {
+            index = (y + portraintHeight) *  this.width + x;
+        } else if (y < topHeight + portraintHeight + compressedHeight) {
+            index = (y - compressedHeight) *  this.width + x;
+        } else {
+            index = y *  this.width + x;
+        }
 
+        return this.palettes[0].Colors[this.pixels[index] % 16]
+        
+
+    }
+
+    getPixelXY(x, y) {
+        return this.getPixel(x + y * this.width);
     }
 }
 
