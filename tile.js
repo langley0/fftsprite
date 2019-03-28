@@ -33,6 +33,11 @@ function unsignedByteToSigned(byte) {
     }
 }
 
+const type1Offset = {
+    x: 12,
+    y: 36
+}
+
 class Tile {
     constructor(bytes, yOffset, rotation) {
         rotation = (rotation * 1.40625);
@@ -46,7 +51,7 @@ class Tile {
         const tileX = (flags & 0x1F) * 8;
         const tileY = ((flags >> 5) & 0x1F) * 8 + yOffset;
 
-        const location = { x: x + 53, y: y + 118 };
+        const location = { x: x + type1Offset.x, y: y + type1Offset.y };
         const size = sizes[f];
         const rectangle = { x: tileX, y: tileY, width: size.x, height: size.y };
 

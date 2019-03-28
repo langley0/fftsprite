@@ -5,6 +5,11 @@ const defaultFrameSize = {
     h: 250
 };
 
+const type1FrameSize = {
+    w: 24,
+    h: 48
+}
+
 function CopyRectangleToPoint( source,  sourceRectangle, destination, destinationPoint, reverseX, reverseY ) {
 
     const width = sourceRectangle.width;
@@ -63,8 +68,8 @@ class Frame {
 
     getFrame(source) {
         const result = {
-            width: defaultFrameSize.w,
-            height: defaultFrameSize.h,
+            width: type1FrameSize.w,
+            height: type1FrameSize.h,
             pixels: new Array(defaultFrameSize.w * defaultFrameSize.h * 4)
         };
 
